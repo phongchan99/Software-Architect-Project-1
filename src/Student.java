@@ -60,6 +60,7 @@ public class Student {
                 "Sid='" + Sid + '\'' +
                 ", Sname='" + Sname + '\'' +
                 ", Sbd='" + Sbd + '\'' +
-                '}';
+                "}\n";
+
     }
 }

@@ -1,51 +1,30 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
 
-public class Test1 {
-    static Scanner in = new Scanner(System.in);
 
-    public static void main(String args[]) {
+public class Test1 {
+    public static void main(String args[]) throws Exception {
         ArrayList<Student> studentAv = new ArrayList<>();
         ArrayList<Course> courseAv = new ArrayList<>();
+        String semester[] = new String[100];
 
-        Course c1 = new Course("c001", "Information Technology","12");
+        String line = "";
+        String splitBy = ",";
 
-        Student s1 = new Student("s001", "Nguyen Chan Phong", "02/01/2000");
-        Student s2 = new Student("s002", "Audrey", "23/01/2003");
-        studentAv.add(s1);
-        studentAv.add(s2);
-        courseAv.add(c1);
-
-        Student result1;
-        Course result2;
-
-        System.out.println("Enter the student ID: ");
-        String studentID = in.nextLine();
-        System.out.println("Enter the course ID: ");
-        String courseID = in.nextLine();
-
-        for (int i = 0; i < studentAv.size(); i++) {
-            if (studentAv.get(i).getSid().equals(studentID)) {
-                result1 = studentAv.get(i);
-                System.out.println(result1);
-            }
+        BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\phongchan99\\Downloads\\default.csv"));
+        while ((line = in.readLine()) != null) {
+            String[] student = line.split(splitBy);
+            studentAv.add(new Student(student[0], student[1], student[2]));
+            courseAv.add(new Course(student[3], student[4], student[5]));
+//            System.out.println("Student [ID]= " + student[0] + ", name= " + student[1] + ", birthdate =" + student[2] + ", course ID= " + student[3] + ", course name= " + student[4] + ", course credit= " + student[5] + ", semester= " + student[6]);
         }
+        System.out.println(studentAv + "\n");
+        System.out.println(courseAv + "\n");
 
-        for (int i = 0; i < courseAv.size(); i++) {
-            if (courseAv.get(i).getCid().equals(courseID)) {
-                result2 = courseAv.get(i);
-                System.out.println(result2);
-            }
-        }
-
-//        c1.enrol(s1);
-//        c1.enrol(s2);
-//        System.out.println(c1.getStudentList().toString());
-
-    }
-
-    public void searchbyID(String id) {
 
     }
 }
