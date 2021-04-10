@@ -59,12 +59,6 @@ public class Course {
         Credit = credit;
     }
 
-    public void enrol(Student student) {
-        if (studentList.contains(student))
-            System.out.println("Already in the course");
-        getStudentList().add(student);
-        System.out.println("Success");
-    }
 
 
     @Override

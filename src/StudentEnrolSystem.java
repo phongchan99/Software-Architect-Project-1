@@ -7,14 +7,14 @@ public class StudentEnrolSystem {
     static Scanner in = new Scanner(System.in);
 
 
-    static List<Course> courseAv = new ArrayList();
-    static List<Student> studentAv = new ArrayList();
+    static ArrayList<Course> courseAv = new ArrayList();
+    static ArrayList<Student> studentAv = new ArrayList();
+    static ArrayList<StudentEnrolment> studentEnrolmentList = new ArrayList<>();
 
 
     static String[] semester = {"2021A", "2021B", "2021C", "2022A", "2022B", "2022C", "2023A", "2023B", "2023C"};
     static List<String> semesters = new ArrayList(Arrays.asList(semester));
 
-    static ArrayList<StudentEnrolment> studentEnrolment = new ArrayList<>();
 
     public static void mainMenu() {
         System.out.println("\n Enrollment System:");
@@ -36,22 +36,45 @@ public class StudentEnrolSystem {
     }
 
     public static void readFile(String link) throws Exception {
-        String line = "";
+        String line;
         String splitBy = ",";
-        String def = "C:\\Users\\phongchan99\\Downloads\\default.csv";
-        int i=0;
+        boolean sDup = false;
+        boolean cDup = false;
+        try {
+            BufferedReader in = new BufferedReader(new FileReader(link));
 
-        BufferedReader in = new BufferedReader(new FileReader(link));
-        while ((line = in.readLine()) != null) {
-            String[] data = line.split(splitBy);
-            studentAv.add(new Student(data[0], data[1], data[2]));
-            courseAv.add(new Course(data[3], data[4], data[5]));
-            studentEnrolment.add(new StudentEnrolment(studentAv.get(i), courseAv.get(i),data[6]));
-            i++;
+            while ((line = in.readLine()) != null) {
+                String[] data = line.split(splitBy);
 
+                for (Student student : studentAv) {
+                    if (student.getSid().equals(data[0])) {
+                        sDup = true;
+                        break;
+                    }
+                }
+                for (Course course : courseAv) {
+                    if (course.getCid().equals(data[3])) {
+                        cDup = true;
+                        break;
+                    }
+                }
+                if (!sDup) {
+                    studentAv.add(new Student(data[0], data[1], data[2]));
+                }
+                if (!cDup) {
+                    System.out.println("Course access");
+                    courseAv.add(new Course(data[3], data[4], data[5]));
+                    System.out.println(courseAv);
+                }
+                studentEnrolmentList.add(new StudentEnrolment(new Student(data[0], data[1], data[2]), new Course(data[3], data[4], data[5]), data[6]));
+
+
+            }
+            System.out.println("Read the file successfully.");
+
+        } catch (IOException e) {
+            System.out.println("Found error, cannot load the file.");
         }
-
-        System.out.println(studentEnrolment.toString()+ "\n");
     }
 
     public static void main(String[] args) throws Exception {
@@ -75,7 +98,7 @@ public class StudentEnrolSystem {
             opt = getMenuOption();
             switch (opt) {
                 case 1 -> add();
-                case 2 -> addNewCourse();
+                case 2 -> delete();
                 case 3 -> getAll();
                 case 4 -> update();
                 case 5 -> getOne();
@@ -85,31 +108,8 @@ public class StudentEnrolSystem {
         while (opt != 7);
     }
 
-    public static boolean addNewCourse() throws IOException {
-        System.out.print("\n [Course Info] \n");
-        System.out.print("Please enter course ID: ");
 
-        String courseID = in.nextLine();
-        for (Course course : courseAv) {
-            if (course.getCid().equals(courseID)) {
-                System.out.println("Course already existed.");
-                return false;
-            }
-        }
-        System.out.print("Enter course name: ");
-        String courseName = in.nextLine();
-
-        System.out.print("Enter course credits: ");
-        String credit = in.nextLine();
-
-        courseAv.add(new Course(courseID, courseName, credit));
-        System.out.println("Added successfully");
-        System.out.println(courseAv);
-        return false;
-    }
-
-
-    public static boolean add() {
+    public static void add() {
 
         Student result1 = null;
         Course result2 = null;
@@ -123,7 +123,7 @@ public class StudentEnrolSystem {
         }
         if (result1 == null) {
             System.out.println("No student available with given ID.");
-            return false;
+            return;
         }
 
         System.out.println("Enter the course ID: ");
@@ -135,12 +135,12 @@ public class StudentEnrolSystem {
         }
         if (result2 == null) {
             System.out.println("No course available with given ID.");
-            return false;
+            return;
         }
 
         if (result2.getStudentList().contains(result1)) {
             System.out.println("Existed");
-            return false;
+            return;
         } else {
 
         System.out.println("Enter the semester: ");
@@ -149,7 +149,7 @@ public class StudentEnrolSystem {
 
         if (!(semesters.contains(Sem))) {
             System.out.println("Not a valid semester.");
-            return false;
+            return;
         }
 
             result2.getStudentList().add(result1);
@@ -157,17 +157,15 @@ public class StudentEnrolSystem {
             System.out.println("Success");
         }
         System.out.println("Course contain: " + result2.getStudentList().toString());
-        return true;
     }
 
 
 
-        public boolean delete() {
-            return false;
+        public static void delete() {
         }
 
 
-        public static boolean update() {
+        public static void update() {
             Student result1 = null;
             Course result2 = null;
             int opt = 0;
@@ -182,7 +180,7 @@ public class StudentEnrolSystem {
             }
             if (result1 == null) {
                 System.out.println("No student available with given ID.");
-                return false;
+                return;
             }
             System.out.println(result1.getSid() + "'s course lists: " + result1.getCourseList().toString());
             System.out.println("Do you want to | [1]Add / [2]Delete | a course? ");
@@ -206,14 +204,12 @@ public class StudentEnrolSystem {
                 }
                 else
                     System.out.println("Not an available option.");
-                return false;
             }
-            return true;
         }
 
 
         public static boolean getOne() {
-            Course result = null;
+            Course result;
             System.out.println("Please enter the course ID:");
             String courseID = in.nextLine();
 
@@ -224,13 +220,13 @@ public class StudentEnrolSystem {
                     return true;
                 }
             }
-
             return false;
         }
 
 
         public static void getAll() {
-            System.out.println(studentEnrolment.toString() + "\n");
+            System.out.println(studentEnrolmentList.toString() + "\n");
             System.out.println(studentAv);
+            System.out.println(courseAv);
         }
     }

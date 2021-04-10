@@ -27,7 +27,7 @@ public class StudentEnrolment {
 
     @Override
     public String toString() {
-        return  "\n" +student.getSid() +
+        return student.getSid() +
                 "," + student.getSname() +
                 "," + student.getSbd() +
                 "," + course.getCid() +
