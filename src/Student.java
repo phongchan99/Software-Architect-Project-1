@@ -1,13 +1,9 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 
 public class Student {
-    InputStreamReader isr = new InputStreamReader(System.in);
-    BufferedReader bf = new BufferedReader(isr);
 
-    private String Sid;
-    private String Sname;
-    private String Sbd;
+    private final String Sid;
+    private final String Sname;
+    private final String Sbd;
 
     public Student(String sid, String sname, String sbd) {
         Sid = sid;

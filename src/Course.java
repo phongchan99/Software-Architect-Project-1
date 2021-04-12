@@ -1,14 +1,9 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 
 public class Course {
-    InputStreamReader isr = new InputStreamReader(System.in);
-    BufferedReader bf = new BufferedReader(isr);
 
-    private String Cid;
-    private String Cname;
-    private String Credit;
+    private final String Cid;
+    private final String Cname;
+    private final String Credit;
 
     public Course(String cid, String cname, String credit) {
         Cid = cid;

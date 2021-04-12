@@ -322,7 +322,7 @@ public class StudentEnrolSystem implements StudentEnrolmentManager{
                     System.out.println("Enter the semester:");
                     semester = in.nextLine();
                     for (StudentEnrolment studentEnrolment : studentEnrolmentList) {
-                        if (studentEnrolment.getStudent().equals(studentID) && (studentEnrolment.getSemester().equals(semester))) {
+                        if (studentEnrolment.getStudent().equals(studentID) && studentEnrolment.getSemester().equals(semester)) {
                             System.out.println(studentEnrolment.toString());
                         }
                     }
