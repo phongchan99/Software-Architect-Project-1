@@ -1,11 +1,9 @@
 public interface StudentEnrolmentManager {
-    public boolean add();
+    static void add(){}
 
-    public boolean delete();
+    static void update(){}
 
-    public boolean update();
+    static void getOne(){}
 
-    public boolean getOne();
-
-    public void getAll();
+    static void getAll() {}
 }

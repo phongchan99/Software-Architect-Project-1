@@ -2,10 +2,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Array;
 import java.util.*;
 
-public class StudentEnrolSystem {
+public class StudentEnrolSystem implements StudentEnrolmentManager{
     static Scanner in = new Scanner(System.in);
 
     static ArrayList<Course> courseAv = new ArrayList();
@@ -403,5 +402,6 @@ public class StudentEnrolSystem {
 
             System.out.println("\n List of courses:");
             System.out.println(courseAv.toString());
-    }
+
+        }
     }
