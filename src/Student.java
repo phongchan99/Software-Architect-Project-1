@@ -52,7 +52,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" +
+        return "\n Student{" +
                 "Sid='" + Sid + '\'' +
                 ", Sname='" + Sname + '\'' +
                 ", Sbd='" + Sbd + '\'' +

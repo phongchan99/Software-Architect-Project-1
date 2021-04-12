@@ -34,58 +34,58 @@ public class StudentEnrolSystem {
         return option;
     }
 
-    public static void readFile(String link) throws Exception {
-        String line;
-        String splitBy = ",";
-        boolean sDup = false;
-        boolean cDup = false;
-        try {
-
-            BufferedReader in = new BufferedReader(new FileReader(link));
-
-            while ((line = in.readLine()) != null) {
-                String[] data = line.split(splitBy);
-
-                for (Student student : studentAv) {
-                    if (student.getSid().equals(data[0])) {
-                        sDup = true;
-                        break;
-                    }
-                }
-                for (Course course : courseAv) {
-                    if (course.getCid().equals(data[3])) {
-                        cDup = true;
-                        break;
-                    }
-                }
-                if (!sDup) {
-                    studentAv.add(new Student(data[0], data[1], data[2]));
-                }
-
-                if (!cDup) {
-                    System.out.println("Course access");
-                    courseAv.add(new Course(data[3], data[4], data[5]));
-                    System.out.println(courseAv);
-                }
-                studentEnrolmentList.add(new StudentEnrolment(new Student(data[0], data[1], data[2]), new Course(data[3], data[4], data[5]), data[6]));
+    public static String readFile(){
+        boolean done = false;
+        String fileName = "";
+        while (!done) {
+            System.out.print("Please enter File Name located in src folder. Leave null to load default file: ");
+            fileName = in.nextLine();
+            String defaultFile = "default.csv";
+            if (!fileName.equals("")) {
+                defaultFile = "src/"+fileName;
             }
-            System.out.println("Read the file successfully.");
+            String line;
+            String splitBy = ",";
+            try {
+                BufferedReader in = new BufferedReader(new FileReader(defaultFile));
 
-        } catch (IOException e) {
-            System.out.println("Found error, cannot load the file.");
+                while ((line = in.readLine()) != null) {
+
+                    boolean sAdded = false, cAdded = false;
+                    String[] data = line.split(splitBy);
+                    for (Student student : studentAv) {
+                        if (student.getSid().equals(data[0])) {
+                            sAdded = true;
+                            break;
+                        }
+                    }
+                    for (Course course : courseAv) {
+                        if (course.getCid().equals(data[3])) {
+                            cAdded = true;
+                            break;
+                        }
+                    }
+                    if (!sAdded) {
+                        studentAv.add(new Student(data[0], data[1], data[2]));
+                    }
+                    if (!cAdded) {
+                        courseAv.add(new Course(data[3], data[4], data[5]));
+                    }
+                    studentEnrolmentList.add(new StudentEnrolment((new Student(data[0], data[1], data[2])), new Course(data[3], data[4], data[5]), data[6]));
+                }
+                System.out.println("Successfully read from file.");
+                done = true;
+
+            } catch (IOException e) {
+                System.out.println("An error occurred. Cannot find File.");
+                done=false;
+            }
         }
+        return fileName;
     }
 
     public static void main(String[] args) throws Exception {
-        String defaultLink = "default.csv";
-
-        System.out.println("Enter the enrolment file's name? If no leave the field empty.");
-        String link = in.nextLine();
-        if (link.equals("")) {
-            readFile(defaultLink);
-        }
-        else
-            readFile(link);
+        String defaultLink = readFile();
 
         int opt;
         do {
@@ -97,7 +97,7 @@ public class StudentEnrolSystem {
                 case 3 -> getAll();
                 case 4 -> update();
                 case 5 -> saveFile(defaultLink);
-                case 0 -> System.out.println("Good bye");
+                case 0 -> System.out.println("Thanks for using the application.");
                 default -> System.out.println("Choice not found");
             }
         }
@@ -145,8 +145,8 @@ public class StudentEnrolSystem {
         }
 
         System.out.println("List of available courses:");
-        for (Course course : courseAv) {
-            System.out.println(course.getCid() + " " + course.getCname());
+        for (StudentEnrolment studentEnrolment : studentEnrolmentList) {
+            System.out.println(studentEnrolment.getCourse().getCid() + " " + studentEnrolment.getCourse().getCname() + " " + studentEnrolment.getCourse().getCredit());
         }
 
         System.out.println("Enter the course ID: ");
@@ -181,7 +181,6 @@ public class StudentEnrolSystem {
         public static void update() {
             Student result1 = null;
             Course result2 = null;
-            int opt = 0;
             String chose;
 
             for (Student student : studentAv){
@@ -203,7 +202,6 @@ public class StudentEnrolSystem {
                     System.out.println(studentEnrolment.toString());
                 }
             }
-
             System.out.println("Do you want to | [1]Add / [2]Delete | a course? ");
             System.out.println("Please input your select");
             chose = in.nextLine();
@@ -229,13 +227,11 @@ public class StudentEnrolSystem {
                     System.out.println("Please enter the course ID you want to delete:");
                     String courseID = in.nextLine();
 
-                    for (int i = 0; i < courseAv.size(); i++) {
-                        if (courseAv.get(i).getCid().equals(courseID)) {
-                            result2 = courseAv.get(i);
-                        }
-                    }
+                    System.out.println("Enter the semester:");
+                    String sem = in.nextLine();
+
                     for (StudentEnrolment studentEnrolment : studentEnrolmentList) {
-                        if (studentEnrolment.getCourse().getCid().equalsIgnoreCase(courseID)) {
+                        if ((studentEnrolment.getCourse().getCid().equalsIgnoreCase(courseID)) && (studentEnrolment.getSemester().equals(sem))) {
                             studentEnrolmentList.remove(studentEnrolment);
                             System.out.println("Successfully deleted course " + courseID + " from " + studentID);
                             break;
@@ -247,7 +243,6 @@ public class StudentEnrolSystem {
                     System.out.println("Not an available option.");
             }
         }
-
 
         public static void getOne() {
             Student result1 = null;
@@ -330,7 +325,6 @@ public class StudentEnrolSystem {
                                 System.out.println(studentEnrolment.toString());
                             }
                         }
-
                         System.out.println("Do you want to print the file?\n" +
                                 "[1]Yes\n" +
                                 "[2]No");
@@ -375,7 +369,6 @@ public class StudentEnrolSystem {
                             FileWriter fw = new FileWriter(defaultFile);
                             for (StudentEnrolment studentEnrolment : studentEnrolmentList) {
                                 if (studentEnrolment.getSemester().equals(semester)) {
-
                                     fw.write(studentEnrolment.toString());
                                 }
                             }
@@ -395,13 +388,17 @@ public class StudentEnrolSystem {
             }
         }
 
-
         public static void getAll() {
             if (studentEnrolmentList.isEmpty()) {
                 System.out.println("No records to be shown.");
             }
-            for (StudentEnrolment studentEnrolment : studentEnrolmentList) {
-                System.out.println(studentEnrolment.toString());
-            }
-        }
+            System.out.println("List of enrolments");
+            System.out.println(studentEnrolmentList.toString());
+
+            System.out.println("List of students:");
+            System.out.println(studentAv.toString());
+
+            System.out.println("\n List of courses:");
+            System.out.println(courseAv.toString());
+    }
     }
