@@ -305,14 +305,13 @@ public class StudentEnrolSystem implements StudentEnrolmentManager{
                     [3]Print all courses offered in chosen semester\s""");
             String opt = in.nextLine();
             switch (opt) {
-                case "1":
+                case "1" -> {
                     System.out.println("List of available students");
                     for (Student student : studentAv) {
                         System.out.println(student.getSid() + " " + student.getSname());
                     }
                     System.out.println("Please enter the student ID:");
                     String studentID = in.nextLine();
-
                     for (Student student : studentAv) {
                         if (student.getSid().equals(studentID)) {
                             result1 = student;
@@ -322,45 +321,41 @@ public class StudentEnrolSystem implements StudentEnrolmentManager{
                             return;
                         }
                     }
-                        System.out.println("Enter the semester:");
-                        semester = in.nextLine();
-
-                        for (StudentEnrolment studentEnrolment : studentEnrolmentList) {
-                            if (studentEnrolment.getStudent().equals(studentID) && (studentEnrolment.getSemester().equals(semester))) {
-                                System.out.println(studentEnrolment.toString());
-                            }
+                    System.out.println("Enter the semester:");
+                    semester = in.nextLine();
+                    for (StudentEnrolment studentEnrolment : studentEnrolmentList) {
+                        if (studentEnrolment.getStudent().equals(studentID) && (studentEnrolment.getSemester().equals(semester))) {
+                            System.out.println(studentEnrolment.toString());
                         }
-                        System.out.println("""
-                                Do you want to print the file?
-                                [Y]Yes
-                                [N]No""");
-                        chose = in.nextLine();
-                        if (chose.equalsIgnoreCase("Y")) {
-                            String defaultFile = "src/Default.csv";
-                            try {
-                                FileWriter fw = new FileWriter(defaultFile);
-                                for (StudentEnrolment studentEnrolment : studentEnrolmentList) {
-                                    if (studentEnrolment.getStudent().getSid().equals(studentID) && (studentEnrolment.getSemester().equals(semester))) {
-                                        fw.write(studentEnrolment.toString());
-                                    }
+                    }
+                    System.out.println("""
+                            Do you want to print the file?
+                            [Y]Yes
+                            [N]No""");
+                    chose = in.nextLine();
+                    if (chose.equalsIgnoreCase("Y")) {
+                        String defaultFile = "src/Default.csv";
+                        try {
+                            FileWriter fw = new FileWriter(defaultFile);
+                            for (StudentEnrolment studentEnrolment : studentEnrolmentList) {
+                                if (studentEnrolment.getStudent().getSid().equals(studentID) && (studentEnrolment.getSemester().equals(semester))) {
+                                    fw.write(studentEnrolment.toString());
                                 }
-                                fw.close();
-                                System.out.println("File exported successfully");
-                            } catch (IOException e) {
-                                System.out.println("An error found.");
-                                e.printStackTrace();
                             }
-                        } else if (chose.equalsIgnoreCase("N"))
-                            System.out.println("The process finished");
-                        break;
-
-                case "2":
+                            fw.close();
+                            System.out.println("File exported successfully");
+                        } catch (IOException e) {
+                            System.out.println("An error found.");
+                            e.printStackTrace();
+                        }
+                    } else if (chose.equalsIgnoreCase("N"))
+                        System.out.println("The process finished");
+                }
+                case "2" -> {
                     System.out.println("List of courses:");
                     System.out.println(courseAv.toString());
-
                     System.out.println("Please enter the course ID:");
                     String courseID = in.nextLine();
-
                     for (Course course : courseAv) {
                         if (course.getCid().equals(courseID)) {
                             result2 = course;
@@ -370,9 +365,8 @@ public class StudentEnrolSystem implements StudentEnrolmentManager{
                             return;
                         }
                     }
-                        System.out.println("Enter the semester:");
-                        semester = in.nextLine();
-
+                    System.out.println("Enter the semester:");
+                    semester = in.nextLine();
                     for (StudentEnrolment studentEnrolment : studentEnrolmentList) {
                         if (studentEnrolment.getCourse().getCid().equals(courseID) && (studentEnrolment.getSemester().equals(semester))) {
                             System.out.println(studentEnrolment.toString());
@@ -401,12 +395,10 @@ public class StudentEnrolSystem implements StudentEnrolmentManager{
                     } else {
                         System.out.println("The process finished.");
                     }
-                    break;
-
-                case "3":
+                }
+                case "3" -> {
                     System.out.println("Enter the semester");
                     semester = in.nextLine();
-
                     for (StudentEnrolment studentEnrolment : studentEnrolmentList) {
                         if (studentEnrolment.getSemester().equals(semester)) {
                             System.out.println(studentEnrolment.getCourse().getCid() + " " + studentEnrolment.getCourse().getCname() + " " + studentEnrolment.getCourse().getCredit());
@@ -435,10 +427,8 @@ public class StudentEnrolSystem implements StudentEnrolmentManager{
                     } else {
                         System.out.println("The process finished.");
                     }
-                    break;
-                default:
-                    System.out.println("The choice is not available");
-                    break;
+                }
+                default -> System.out.println("The choice is not available");
             }
         }
 
