@@ -13,7 +13,7 @@ public class StudentEnrolSystem {
     static ArrayList<StudentEnrolment> studentEnrolmentList = new ArrayList<>();
 
     static String[] semester = {"2020A", "2020B", "2020C","2021A","2021B","2021C","2022A","2022B","2022C","2023A","2023B","2023C","2024A","2024B","2024C"};
-    static List<String> semesters = new ArrayList(Arrays.asList(semester));
+    static ArrayList semesters = new ArrayList(Arrays.asList(semester));
 
     public static void mainMenu() {
         System.out.println("\n Enrollment System:");
@@ -84,9 +84,8 @@ public class StudentEnrolSystem {
         return fileName;
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         String defaultLink = readFile();
-
         int opt;
         do {
             mainMenu();
@@ -135,9 +134,9 @@ public class StudentEnrolSystem {
         System.out.println("Enter the student ID: ");
         String studentID = in.nextLine();
 
-        for (int i = 0; i < studentAv.size(); i++) {
-            if (studentAv.get(i).getSid().equals(studentID))
-                result1 = studentAv.get(i);
+        for (Student student : studentAv) {
+            if (student.getSid().equals(studentID))
+                result1 = student;
         }
         if (result1 == null) {
             System.out.println("No student available with given ID.");
@@ -152,9 +151,9 @@ public class StudentEnrolSystem {
         System.out.println("Enter the course ID: ");
         String courseID = in.nextLine();
 
-        for (int i = 0; i < courseAv.size(); i++) {
-            if (courseAv.get(i).getCid().equals(courseID))
-                result2 = courseAv.get(i);
+        for (Course course : courseAv) {
+            if (course.getCid().equals(courseID))
+                result2 = course;
         }
         if (result2 == null) {
             System.out.println("No course available with given ID.");
@@ -185,13 +184,13 @@ public class StudentEnrolSystem {
 
             for (Student student : studentAv){
                 System.out.println(student.getSid() + " " + student.getSname());
-            };
+            }
             System.out.println("Please enter the student ID:");
             String studentID = in.nextLine();
 
-            for (int i = 0; i < studentAv.size(); i++) {
-                if (studentAv.get(i).getSid().equals(studentID))
-                    result1 = studentAv.get(i);
+            for (Student student : studentAv) {
+                if (student.getSid().equals(studentID))
+                    result1 = student;
             }
             if (result1 == null) {
                 System.out.println("No student available with given ID.");
@@ -250,10 +249,11 @@ public class StudentEnrolSystem {
             String semester;
             String chose;
 
-            System.out.println("Select option below:\n" +
-                    "[1]Print all courses of 1 student in 1 semester.\n" +
-                    "[2]Print all students of 1 course in 1 semester.\n" +
-                    "[3]Print all courses offered in chosen semester ");
+            System.out.println("""
+                    Select option below:
+                    [1]Print all courses of 1 student in 1 semester.
+                    [2]Print all students of 1 course in 1 semester.
+                    [3]Print all courses offered in chosen semester\s""");
             String opt = in.nextLine();
             switch (opt) {
                 case "1":
@@ -280,9 +280,10 @@ public class StudentEnrolSystem {
                                 System.out.println(studentEnrolment.toString());
                             }
                         }
-                        System.out.println("Do you want to print the file?\n" +
-                                "[Y]Yes\n" +
-                                "[N]No");
+                        System.out.println("""
+                                Do you want to print the file?
+                                [Y]Yes
+                                [N]No""");
                         chose = in.nextLine();
                         if (chose.equalsIgnoreCase("Y")) {
                             String defaultFile = "src/Default.csv";
@@ -325,9 +326,10 @@ public class StudentEnrolSystem {
                                 System.out.println(studentEnrolment.toString());
                             }
                         }
-                        System.out.println("Do you want to print the file?\n" +
-                                "[1]Yes\n" +
-                                "[2]No");
+                        System.out.println("""
+                                Do you want to print the file?
+                                [1]Yes
+                                [2]No""");
                         chose = in.nextLine();
                         if (chose.equals("1")) {
                             String defaultFile = "src/default.csv";
@@ -359,9 +361,10 @@ public class StudentEnrolSystem {
                             System.out.println(studentEnrolment.toString());
                         }
                     }
-                    System.out.println("Do you want to print the file?\n" +
-                            "[1]Yes\n" +
-                            "[2]No");
+                    System.out.println("""
+                            Do you want to print the file?
+                            [1]Yes
+                            [2]No""");
                     chose = in.nextLine();
                     if (chose.equals("1")) {
                         String defaultFile = "src/default.csv";
