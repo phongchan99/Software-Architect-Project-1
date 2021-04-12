@@ -9,20 +9,14 @@ public class Course {
     InputStreamReader isr = new InputStreamReader(System.in);
     BufferedReader bf = new BufferedReader(isr);
 
-
     private String Cid;
     private String Cname;
     private String Credit;
-    private ArrayList<Student> studentList = new ArrayList<>();
 
-
-    public Course(String cid) {
-    }
-
-    public Course() {
-        this.Cid = "c001";
-        this.Cname = "Intro to Programming";
-        this.Credit = "12";
+    public Course(String cid, String cname, String credit) {
+        Cid = cid;
+        Cname = cname;
+        Credit = credit;
     }
 
     public String getCid() {
@@ -49,17 +43,6 @@ public class Course {
         Credit = credit;
     }
 
-    public ArrayList<Student> getStudentList() {
-        return studentList;
-    }
-
-    public Course(String cid, String cname, String credit) {
-        Cid = cid;
-        Cname = cname;
-        Credit = credit;
-    }
-
-
 
     @Override
     public String toString() {
@@ -69,6 +52,4 @@ public class Course {
                 ", Credit='" + Credit + '\'' +
                 '}';
     }
-
-
 }

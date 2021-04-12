@@ -9,7 +9,6 @@ public class Student {
     private String Sid;
     private String Sname;
     private String Sbd;
-    private ArrayList<Course> courseList = new ArrayList<>();
 
     public Student(String sid, String sname, String sbd) {
         Sid = sid;
@@ -50,9 +49,6 @@ public class Student {
         Sbd = sbd;
     }
 
-    public ArrayList<Course> getCourseList() {
-        return courseList;
-    }
 
     @Override
     public String toString() {
@@ -60,6 +56,6 @@ public class Student {
                 "Sid='" + Sid + '\'' +
                 ", Sname='" + Sname + '\'' +
                 ", Sbd='" + Sbd + '\'' +
-                '}';
+                "}";
     }
 }
