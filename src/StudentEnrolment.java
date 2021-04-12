@@ -15,10 +15,6 @@ public class StudentEnrolment {
         return semester;
     }
 
-    public StudentEnrolment() {
-
-    }
-
     public StudentEnrolment(Student student, Course course, String semester) {
         this.student = student;
         this.course = course;

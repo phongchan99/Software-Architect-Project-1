@@ -1,8 +1,5 @@
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 
 public class Course {
@@ -18,31 +15,17 @@ public class Course {
         Cname = cname;
         Credit = credit;
     }
-
     public String getCid() {
         return Cid;
-    }
-
-    public void setCid(String cid) {
-        Cid = cid;
     }
 
     public String getCname() {
         return Cname;
     }
 
-    public void setCname(String cname) {
-        Cname = cname;
-    }
-
     public String getCredit() {
         return Credit;
     }
-
-    public void setCredit(String credit) {
-        Credit = credit;
-    }
-
 
     @Override
     public String toString() {

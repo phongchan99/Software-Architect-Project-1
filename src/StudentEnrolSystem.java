@@ -121,7 +121,6 @@ public class StudentEnrolSystem implements StudentEnrolmentManager{
         }
     }
 
-
     public static void add() {
 
         Student result1 = null;
@@ -261,7 +260,6 @@ public class StudentEnrolSystem implements StudentEnrolmentManager{
                     return;
                 }
             }
-
             System.out.println("Course list:");
             System.out.println(courseAv.toString());
             System.out.println("Please enter the course ID:");
@@ -281,7 +279,6 @@ public class StudentEnrolSystem implements StudentEnrolmentManager{
             if (!(semesters.contains(semester))) {
                 System.out.println("Not an available semester.");
             }
-
             for (StudentEnrolment studentEnrolment : studentEnrolmentList) {
                 if (studentEnrolment.getStudent().getSid().equals(studentID) && studentEnrolment.getCourse().getCid().equals(courseID) && studentEnrolment.getSemester().equalsIgnoreCase(semester)) {
                     System.out.println(studentEnrolment.toString());
@@ -303,6 +300,7 @@ public class StudentEnrolSystem implements StudentEnrolmentManager{
                     [1]Print all courses of 1 student in 1 semester.
                     [2]Print all students of 1 course in 1 semester.
                     [3]Print all courses offered in chosen semester\s""");
+
             String opt = in.nextLine();
             switch (opt) {
                 case "1" -> {
