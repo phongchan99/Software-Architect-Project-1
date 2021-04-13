@@ -437,4 +437,6 @@ public class StudentEnrolSystem implements StudentEnrolmentManager{
             System.out.println("List of enrolments");
             System.out.println(studentEnrolmentList.toString());
         }
-    }
+}
+
+

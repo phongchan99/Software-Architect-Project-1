@@ -1,4 +1,3 @@
-
 public class Student {
 
     private final String Sid;
@@ -10,9 +9,7 @@ public class Student {
         Sname = sname;
         Sbd = sbd;
     }
-    public String getSid() {
-        return Sid;
-    }
+    public String getSid() { return Sid; }
 
     public String getSname() {
         return Sname;
